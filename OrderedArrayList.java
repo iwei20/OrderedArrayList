@@ -6,20 +6,27 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
 
     // Does not guarantee stability
     public boolean add(T element) {
+        try{
+            super.add(element);
+            super.remove(size() - 1);   
+        } catch(IllegalArgumentException e) {
+            throw e;
+        }
+
         int low = 0;
-        int high = size() - 1;
+        int high = super.size() - 1;
         int index = -1;
         while(low < high && index == -1) {
             int mid = low + (high - low) / 2;
-            if(element.compareTo(get(mid)) == 0) {
+            if(element.compareTo(super.get(mid)) == 0) {
                 index = mid;
-            } else if(element.compareTo(get(mid)) == 1){
+            } else if(element.compareTo(super.get(mid)) == 1){
                 low = mid + 1;
             } else {
                 high = mid - 1;
             }
         }
-        if(index == -1) index = low;
+        if(index == -1) index = low; 
         super.add(index, element);
         return true;
     }
@@ -30,7 +37,12 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
 
     public T set(int index, T element) {
         T result = super.remove(index);
-        add(element);
+        try{
+            add(element);
+        } catch(IllegalArgumentException e) {
+            super.add(index, element);
+            throw e;
+        }
         return result;
     }
 }
