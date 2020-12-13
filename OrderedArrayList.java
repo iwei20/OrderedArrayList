@@ -4,7 +4,6 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
         super(initialCapacity);
     }
 
-    // Does not guarantee stability
     public boolean add(T element) {
         try{
             super.add(element);
@@ -13,21 +12,17 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
             throw e;
         }
 
-        int low = 0;
-        int high = super.size() - 1;
-        int index = -1;
-        while(low < high && index == -1) {
-            int mid = low + (high - low) / 2;
-            if(element.compareTo(super.get(mid)) == 0) {
-                index = mid;
-            } else if(element.compareTo(super.get(mid)) == 1){
-                low = mid + 1;
+        int l = 0, r = super.size();
+        while(l < r) {
+            int m = l + (r-l)/2;
+            if(super.get(m).compareTo(element) > 0 ) {
+                r = m;
             } else {
-                high = mid - 1;
+                l = m + 1;
             }
         }
-        if(index == -1) index = low; 
-        super.add(index, element);
+
+        super.add(r, element);
         return true;
     }
 
