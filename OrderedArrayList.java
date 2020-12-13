@@ -40,7 +40,7 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
         try{
             add(element);
         } catch(IllegalArgumentException e) {
-            super.add(index, element);
+            super.add(index, result);
             throw e;
         }
         return result;
