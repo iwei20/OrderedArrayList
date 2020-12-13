@@ -17,6 +17,13 @@ public class Tester {
         System.out.println();
 
         OrderedArrayList<Integer> olist = new OrderedArrayList<Integer>();
+        try {
+            olist.add(3, null);
+        } catch(IllegalArgumentException e) {
+            System.out.println("Skipped null");
+            e.printStackTrace();
+        }
+        
         olist.add(50);
         olist.add(90);
         olist.add(120);
